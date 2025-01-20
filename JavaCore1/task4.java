@@ -1,8 +1,7 @@
 interface AccountService {
-
-    Account findAccountByOwnerId(long id);
-
-    long countAccountsWithBalanceGreaterThan(long value);
+    
+  Account findAccountByOwnerId(long id);
+  long countAccountsWithBalanceGreaterThan(long value);
 }
 
 class Account {
@@ -84,17 +83,17 @@ public class task4 implements AccountService {
         this.accounts = accounts;
     }
 
+
     @Override
     public Account findAccountByOwnerId(long id) {
         for (Account account : accounts) {
-            if (account != null && account.getOwner().getId() == id) {
-                System.out.println("Es un usuario duplicado");
+            if(account != null && account.getOwner().getId() == id){
+                System.out.println("ESTOY DENTRO DEL IF YEEEY");
                 return account;
             }
         }
         return null;
     }
-
     public Account[] getAccounts() {
         return accounts;
     }
@@ -110,6 +109,16 @@ public class task4 implements AccountService {
         return count;
     }
 
+    //Identificar IDs consecutivos
+    public boolean isConsecutiveIds() {
+        for (int i = 0; i < accounts.length - 1; i++) {
+            if (accounts[i].getId() + 1 != accounts[i + 1].getId()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         User user1 = new User(1, "John", "Doe");
         User user2 = new User(2, "Jane", "Smith");
@@ -122,11 +131,16 @@ public class task4 implements AccountService {
 
         System.out.println("Account with owner ID 1: " + accountService.findAccountByOwnerId(1));
         System.err.println("Account with owner ID 3: " + accountService.findAccountByOwnerId(3));
-        System.out.println("Number of accounts with balance greater than 1000: "
-                + accountService.countAccountsWithBalanceGreaterThan(1000));
-        System.out.println("Number of accounts with balance greater than 2000: "
-                + accountService.countAccountsWithBalanceGreaterThan(2000));
+        System.out.println("Number of accounts with balance greater than 1000: "  + accountService.countAccountsWithBalanceGreaterThan(1000));
+        System.out.println("Number of accounts with balance greater than 2000: "  + accountService.countAccountsWithBalanceGreaterThan(2000));
+        if(accountService.isConsecutiveIds()){
+            System.out.println("Los ID son consecutivos");
+        }else{
+            System.out.println("Los ID no son consecutivos");
+        }
+        
     }
+    
 }
 
 
